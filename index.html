@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>First Task</title>
+
+  <!-- =================CSS================ -->
+   
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container{
+      width: 350px;
+    }
+
+    .container h2 {
+      text-align: center;
+      color: #077166;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .container h2::before,
+    .container h2::after{
+      content: "";
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      background: #077166;
+      z-index: -1;
+    }
+
+    .container h2::before {
+      left: 0;
+      right: 0;
+    }
+
+    .container h2 span {
+      background: #f7f7f7;
+      padding: 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .box {
+      background: white;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .box.active {
+      border-color: #077166;
+      box-shadow: 0 4px 15px rgba(0, 128, 0, 0.3);
+    }
+
+    .box input[type="radio"]{
+        width: 18px;
+        height: 18px;
+        border: 2px solid #077166;
+        border-radius: 50%;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .box input[type="radio"]:checked::before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 8px;
+        height: 8px;
+        background: #077166;
+        border-radius: 50%;
+    }
+
+    .box label{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+
+    .content{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .dropdown {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .box:not(.active) .dropdown {
+      display: none;
+    }
+
+    .dropdown select {
+      padding: 5px;
+    }
+
+    .content .real-price{
+        text-decoration: line-through;
+        font-size: 13px;
+        color: #aaa;
+    }
+
+    .footer{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .add-to-cart{
+      background: #077166;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      margin-top: 15px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+        <!-- ================header================ -->
+
+  <div class="container">
+    <h2><span>Bundle & Save</span></h2>
+
+    <!-- ===============main============== -->
+
+    <div class="box">
+      <label>
+        <input type="radio" name="bundle" value="1">
+        <div class="content">
+          <div>1 Pair<br><strong>DKK 195.00</strong></div>
+          <div>50% OFF</div>
+        </div>
+      </label>
+      <div class="dropdown">
+        <label>#1</label>
+        <select><option>S</option></select>
+        <select><option>Colour</option></select>
+      </div>
+      <div class="dropdown">
+        <label>#2</label>
+        <select><option>S</option></select>
+        <select><option>Colour</option></select>
+      </div>
+    </div>
+
+    <div class="box">
+      <label>
+        <input type="radio" name="bundle" value="2">
+        <div class="content">
+          <div>2 Pair<br><strong>DKK 345.00</strong></div>
+          <div class="real-price">DKK 195.00</div>
+          <div style="color: #077166;">Most Popular<br>40% OFF</div>
+        </div>
+      </label>
+      <div class="dropdown">
+        <label>#1</label>
+        <select><option>S</option></select>
+        <select><option>Colour</option></select>
+      </div>
+      <div class="dropdown">
+        <label>#2</label>
+        <select><option>S</option></select>
+        <select><option>Colour</option></select>
+      </div>
+    </div>
+
+    <div class="box">
+      <label>
+        <input type="radio" name="bundle" value="3">
+        <div class="content">
+          <div>3 Pair<br><strong>DKK 528.00</strong></div>
+          <div>60% OFF</div>
+        </div>
+      </label>
+      <div class="dropdown">
+        <label>#1</label>
+        <select><option>S</option></select>
+        <select><option>Colour</option></select>
+      </div>
+      <div class="dropdown">
+        <label>#2</label>
+        <select><option>S</option></select>
+        <select><option>Colour</option></select>
+      </div>
+    </div>
+
+    <!-- ==============footer=============== -->
+
+    <div class="footer">
+      <div>Free Delivery</div>
+      <div class="total">Total: DKK 0.00</div>
+    </div>
+
+    <div class="add-to-cart">+ Add to Cart</div>
+  </div>
+
+  <!-- ===================Javascript==================== -->
+
+  <script>
+    const optionBoxes = document.querySelectorAll('.box');
+    const totalElement = document.querySelector('.total');
+
+    const prices = {
+      1: 195.00,
+      2: 345.00,
+      3: 528.00
+    };
+
+    optionBoxes.forEach(box => {
+      const radio = box.querySelector('input[type="radio"]');
+
+      radio.addEventListener('change', () => {
+        
+        optionBoxes.forEach(b => b.classList.remove('active'));
+        
+        box.classList.add('active');
+
+        
+        const selectedValue = radio.value;
+        totalElement.textContent = `Total: DKK ${prices[selectedValue].toFixed(2)}`;
+      });
+    });
+  </script>
+</body>
+</html>
